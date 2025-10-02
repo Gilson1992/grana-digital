@@ -101,6 +101,7 @@ export const transactions = {
 
 // Accounts
 // GET /api/accounts
+// POST /api/accounts
 export const accounts = {
   list: async (): Promise<Account[]> => {
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -110,6 +111,18 @@ export const accounts = {
       { id: 3, name: 'Carteira', type: 'cash', currency: 'BRL', balance: 320.00, color: '#22C55E' },
       { id: 4, name: 'PicPay', type: 'wallet', currency: 'BRL', balance: 850.75, color: '#11C76F' },
     ];
+  },
+  
+  create: async (data: Partial<Account>): Promise<Account> => {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return {
+      id: Date.now(),
+      name: data.name || '',
+      type: data.type || 'bank',
+      currency: data.currency || 'BRL',
+      balance: data.balance || 0,
+      color: data.color,
+    };
   },
 };
 
@@ -185,7 +198,45 @@ export const cards = {
   // GET /api/cards/:id
   get: async (id: number): Promise<Card> => {
     await new Promise(resolve => setTimeout(resolve, 300));
-    return { id, account_id: 2, name: 'Nubank', closing_day: 15, due_day: 22, limit: 5000 };
+    const allCards = await cards.list();
+    const card = allCards.find(c => c.id === id);
+    return card || { id, account_id: 2, name: 'Nubank', closing_day: 15, due_day: 22, limit: 5000 };
+  },
+  
+  // POST /api/cards
+  create: async (data: Partial<Card>): Promise<Card> => {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return {
+      id: Date.now(),
+      account_id: data.account_id || 1,
+      name: data.name || '',
+      limit: data.limit,
+      closing_day: data.closing_day || 1,
+      due_day: data.due_day || 1,
+    };
+  },
+  
+  // GET /api/cards/:id/invoices
+  getInvoices: async (cardId: number): Promise<CardInvoice[]> => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const currentDate = new Date();
+    const invoices: CardInvoice[] = [];
+    
+    for (let i = 2; i >= 0; i--) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+      const month = date.toISOString().slice(0, 7);
+      const status = i === 2 ? 'open' : i === 1 ? 'closed' : 'paid';
+      
+      invoices.push({
+        id: Date.now() + i,
+        card_id: cardId,
+        reference_month: month,
+        status,
+        total: Math.random() * 2000 + 500,
+      });
+    }
+    
+    return invoices;
   },
   
   // GET /api/cards/:id/invoices/:month

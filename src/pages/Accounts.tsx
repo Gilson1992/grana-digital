@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Wallet, CreditCard, Banknote, Smartphone, Plus } from 'lucide-react';
 import type { AccountType } from '@/types';
+import { AddAccountDialog } from '@/components/accounts/AddAccountDialog';
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -56,10 +57,7 @@ export default function Accounts() {
           <h2 className="text-2xl font-bold">Minhas Contas</h2>
           <p className="text-muted-foreground">Saldo total: {formatCurrency(totalBalance)}</p>
         </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Nova Conta
-        </Button>
+        <AddAccountDialog />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

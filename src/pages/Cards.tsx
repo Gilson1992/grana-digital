@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { CreditCard, Plus, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { AddCardDialog } from '@/components/cards/AddCardDialog';
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -38,12 +39,17 @@ export default function Cards() {
 
   if (!cards || cards.length === 0) {
     return (
-      <EmptyState
-        icon={CreditCard}
-        title="Nenhum cartão cadastrado"
-        description="Adicione seus cartões de crédito para gerenciar faturas e parcelas."
-        action={{ label: 'Adicionar Cartão', onClick: () => {} }}
-      />
+      <div className="space-y-6 pb-20 md:pb-0">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Meus Cartões</h2>
+          <AddCardDialog />
+        </div>
+        <EmptyState
+          icon={CreditCard}
+          title="Nenhum cartão cadastrado"
+          description="Adicione seus cartões de crédito para gerenciar faturas e parcelas."
+        />
+      </div>
     );
   }
 
@@ -51,10 +57,7 @@ export default function Cards() {
     <div className="space-y-6 pb-20 md:pb-0">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Meus Cartões</h2>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Novo Cartão
-        </Button>
+        <AddCardDialog />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -94,7 +97,7 @@ export default function Cards() {
                 className="w-full"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/cards/${card.id}`);
+                  navigate(`/cards/${card.id}/invoices`);
                 }}
               >
                 <Calendar className="h-4 w-4 mr-2" />

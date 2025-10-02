@@ -13,6 +13,7 @@ import QuickAdd from "./pages/QuickAdd";
 import Transactions from "./pages/Transactions";
 import Purchases from "./pages/Purchases";
 import Cards from "./pages/Cards";
+import CardInvoices from "./pages/CardInvoices";
 import Budgets from "./pages/Budgets";
 import Rules from "./pages/Rules";
 import Reports from "./pages/Reports";
@@ -36,10 +37,11 @@ const App = () => (
               <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
                 <Route index element={<Dashboard />} />
                 <Route path="quick-add" element={<QuickAdd />} />
-                <Route path="transactions" element={<Transactions />} />
-                <Route path="purchases" element={<Purchases />} />
-                <Route path="cards" element={<Cards />} />
-                <Route path="budgets" element={<Budgets />} />
+              <Route path="transactions" element={<Transactions />} />
+              <Route path="purchases" element={<Purchases />} />
+              <Route path="cards" element={<Cards />} />
+              <Route path="cards/:id/invoices" element={<CardInvoices />} />
+              <Route path="budgets" element={<Budgets />} />
                 <Route path="rules" element={<Rules />} />
                 <Route path="reports" element={<Reports />} />
                 <Route path="accounts" element={<Accounts />} />

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Plus, TrendingDown } from 'lucide-react';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { AddBudgetDialog } from '@/components/budgets/AddBudgetDialog';
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -40,12 +41,17 @@ export default function Budgets() {
 
   if (!budgets || budgets.length === 0) {
     return (
-      <EmptyState
-        icon={TrendingDown}
-        title="Nenhum orçamento configurado"
-        description="Defina limites mensais para suas categorias de despesas e controle melhor seus gastos."
-        action={{ label: 'Criar Orçamento', onClick: () => {} }}
-      />
+      <div className="space-y-6 pb-20 md:pb-0">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Orçamentos</h2>
+          <AddBudgetDialog />
+        </div>
+        <EmptyState
+          icon={TrendingDown}
+          title="Nenhum orçamento configurado"
+          description="Defina limites mensais para suas categorias de despesas e controle melhor seus gastos."
+        />
+      </div>
     );
   }
 
@@ -53,10 +59,7 @@ export default function Budgets() {
     <div className="space-y-6 pb-20 md:pb-0">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Orçamentos</h2>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Novo Orçamento
-        </Button>
+        <AddBudgetDialog />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
