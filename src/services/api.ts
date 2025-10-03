@@ -339,9 +339,16 @@ export const purchases = {
         vendor_id: 4,
         status: 'recebido',
         expected_date: '2025-01-20',
-        received_date: '2025-01-22',
-        total_estimated: 320.00,
-        total_real: 315.50,
+        total_estimated: 890.00,
+        total_real: 920.00,
+      },
+      {
+        id: 3,
+        vendor_id: 2,
+        status: 'faturado',
+        expected_date: '2025-01-10',
+        total_estimated: 1250.00,
+        total_real: 1250.00,
       },
     ];
   },
@@ -356,9 +363,12 @@ export const purchases = {
   },
   
   // PUT /api/purchases/:id/status
-  updateStatus: async (id: number, status: string) => {
-    await new Promise(resolve => setTimeout(resolve, 400));
-    return { success: true };
+  updateStatus: async (id: number, status: string): Promise<Purchase> => {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return {
+      id,
+      status,
+    } as Purchase;
   },
 };
 
