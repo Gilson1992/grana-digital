@@ -414,18 +414,35 @@ export const dashboard = {
 // Integrations (WhatsApp)
 // GET /api/integrations/whatsapp/status
 // POST /api/integrations/whatsapp/test
+// POST /api/integrations/whatsapp/webhook
+// POST /api/integrations/whatsapp/toggle
 export const integrations = {
   whatsapp: {
     status: async () => {
       await new Promise(resolve => setTimeout(resolve, 300));
       return {
         connected: true,
-        webhook_url: 'https://your-app.com/api/webhooks/whatsapp',
+        active: true,
+        webhook_url: 'https://n8n.example.com/webhook/fincontrol',
+        messages_processed: 127,
+        success_rate: 98,
+        last_message: '2h atrás',
       };
     },
-    testMessage: async () => {
-      await new Promise(resolve => setTimeout(resolve, 500));
+    testMessage: async (phone: string) => {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      console.log('Enviando mensagem de teste para:', phone);
       return { success: true, message: 'Mensagem de teste enviada!' };
+    },
+    saveWebhook: async (url: string) => {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      console.log('Salvando webhook URL:', url);
+      return { success: true, webhook_url: url };
+    },
+    toggleActive: async (active: boolean) => {
+      await new Promise(resolve => setTimeout(resolve, 300));
+      console.log('Toggling integração:', active);
+      return { success: true, active };
     },
   },
 };
